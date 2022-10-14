@@ -41,13 +41,13 @@
     <tbody>
         @foreach( $usuaris as $usuari )
         <tr>
-            <td>{{ $usuari->USUARI_ConsInte__b }}</td>
+            <td>{{ $usuari->id }}</td>
             <td> 
-                <a href="{{ url('/usuari/'.$usuari->USUARI_ConsInte__b.'/edit') }}" class="btn btn-primary" >
+                <a href="{{ url('/usuari/'.$usuari->id.'/edit') }}" class="btn btn-primary" >
                     Editar
                 </a>   
                 <!-- | -->   
-                <form action="{{ url('/usuari/'.$usuari->USUARI_ConsInte__b ) }}" class="d-inline" method="post">
+                <form action="{{ url('/usuari/'.$usuari->id ) }}" class="d-inline" method="post">
                     @csrf
                     {{ method_field('DELETE') }}
                     <input type="submit" onclick="return confirm('¿Quieres borrar?')" class="btn btn-danger" value="Borrar">

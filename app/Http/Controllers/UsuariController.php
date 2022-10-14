@@ -100,10 +100,10 @@ class UsuariController extends Controller
      * @param  \App\Models\Usuari  $usuari
      * @return \Illuminate\Http\Response
      */
-    public function edit($USUARI_ConsInte__b)
+    public function edit($id)
     {
         //
-        $usuari=Usuari::findOrFail($USUARI_ConsInte__b);
+        $usuari=Usuari::findOrFail($id);
         return view('usuari.edit', compact('usuari') );
     }
 
@@ -114,7 +114,7 @@ class UsuariController extends Controller
      * @param  \App\Models\Usuari  $usuari
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $USUARI_ConsInte__b)
+    public function update(Request $request, $id)
     {
         //
         $campos=[
@@ -152,14 +152,14 @@ class UsuariController extends Controller
 
         $datosUsuari = request()->except(['_token','_method','updated_at']);
         if($request->hasFile('USUARI_Foto______b')){
-            $usuari=Usuari::findOrFail($USUARI_ConsInte__b);
+            $usuari=Usuari::findOrFail($id);
             Storage::delete('public/'.$usuari->USUARI_Foto______b);
             $datosUsuari['USUARI_Foto______b']=$request->file('USUARI_Foto______b')->store('uploads','public');
         }
         $clave = hash('sha256', $datosUsuari['USUARI_Clave_____b']);
         $datosUsuari['USUARI_Clave_____b'] = $clave;
-        Usuari::where('USUARI_ConsInte__b','=',$USUARI_ConsInte__b)->update($datosUsuari);
-        $usuari=Usuari::findOrFail($USUARI_ConsInte__b);
+        Usuari::where('id','=',$id)->update($datosUsuari);
+        $usuari=Usuari::findOrFail($id);
         //return view('usuari.edit', compact('usuari') );
 
         return redirect('usuari')->with('mensaje','Usario modificado');
@@ -171,12 +171,12 @@ class UsuariController extends Controller
      * @param  \App\Models\Usuari  $usuari
      * @return \Illuminate\Http\Response
      */
-    public function destroy($USUARI_ConsInte__b)
+    public function destroy($id)
     {
         //
-        $usuari=Usuari::findOrFail($USUARI_ConsInte__b);
+        $usuari=Usuari::findOrFail($id);
         if(Storage::delete('public/'.$usuari->USUARI_Foto______b)){
-            Usuari::destroy($USUARI_ConsInte__b);
+            Usuari::destroy($id);
         }
         //return redirect('usuari');
         return redirect('usuari')->with('mensaje','Usario eliminado');
